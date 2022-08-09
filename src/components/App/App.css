@@ -1,0 +1,11 @@
+.active__link {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    transition: .4s ease-in-out;
+}
+
+.active__link:hover {
+    opacity: 0.6;
+}
