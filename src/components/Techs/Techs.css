@@ -48,7 +48,7 @@
     letter-spacing: -0.04em;
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
     .techs {
         padding-top: 90px;
         padding-bottom: 90px;
@@ -72,7 +72,7 @@
     }
 }
 
-@media (min-width: 1280px){
+@media (min-width: 1280px) {
     .techs {
         padding-top: 100px;
         padding-bottom: 100px;
