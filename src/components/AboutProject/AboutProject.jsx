@@ -1,5 +1,6 @@
 import React from 'react';
 import './AboutProject.css';
+import '../Main/Main.css'
 
 function AboutProject() {
     return (
@@ -21,11 +22,11 @@ function AboutProject() {
                     </div>
                 </div>
                 <div className='about-project__time-line'>
-                    <div className='about-project__time-line-big about-project__time-line-small'>
+                    <div className='about-project__time-line-block about-project__time-line-small'>
                         <span className='about-project__time-line-blue'>1 неделя</span>
                         <span className='about-project__caption'>Back-end</span>
                     </div>
-                    <div className='about-project__time-line-big'>
+                    <div className='about-project__time-line-block about-project__time-line-big'>
                         <span className='about-project__time-line-blue about-project__time-line-grey'>4 недели</span>
                         <span className='about-project__caption'>Front-end</span>
                     </div>

@@ -53,15 +53,17 @@
     justify-content: flex-start;
     margin: 0;
 }
+.about-project__time-line-block {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
 
 .about-project__time-line-small {
     width: 100px;
 }
 
 .about-project__time-line-big {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
     width: calc(100% - 100px);
 }
 

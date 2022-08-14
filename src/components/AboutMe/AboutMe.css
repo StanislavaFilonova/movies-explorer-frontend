@@ -1,13 +1,14 @@
 .about-me {
     padding-top: 70px;
     padding-bottom: 70px;
+    background-color: #FAFAFA;
 }
 
 .about-me__block {
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
 }
 
@@ -107,7 +108,7 @@
     .about-me__photo {
         width: 255px;
         height: 307px;
-        margin: 66px auto 0;
+        margin: 66px 0 0;
     }
 }
 
