@@ -7,11 +7,11 @@ import './Header.css';
 import '../Navigation/Navigation';
 import Navigation from "../Navigation/Navigation";
 
-function Header(props) {
+function Header() {
     let location = useLocation();
 
     return(
-        <header className={` header ${location.pathname === "/" ? "header_grey" : ""} ${(location.pathname === "/sign-in" || location.pathname === "/sign-up") ? "header_welcome" : ""}
+        <header className={` header ${location.pathname === "/" ? "header_grey" : ""} ${(location.pathname === "/sign-in" || location.pathname === "/sign-up") ? "header_welcome" : ""} }
         }`}>
             <Link to='/' className='header__logo-click'>
             <img
@@ -20,7 +20,7 @@ function Header(props) {
                 alt="Логотип"
             />
             </Link>
-            {!(location.pathname === "/sign-in" || location.pathname === "/sign-up") &&  <Navigation/>}
+            {!(location.pathname === "/sign-in" || location.pathname === "/sign-up" || location.pathname === "/profile" || location.pathname === "/movies" || location.pathname === "/saved-movies") &&  <Navigation/>}
         </header>
     )
 

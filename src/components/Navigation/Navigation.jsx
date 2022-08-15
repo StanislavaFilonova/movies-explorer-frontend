@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 
-function Navigation(props) {
+function Navigation() {
     return (
         <div className="navigation">
             <nav className="navigation__block">
