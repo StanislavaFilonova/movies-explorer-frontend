@@ -1,5 +1,5 @@
 .search__section {
-    padding: 70px 10px 80px;
+    padding: 70px 10px 50px;
     background-color: #FAFAFA;
 }
 
@@ -77,7 +77,7 @@
     display: flex;
     flex-direction: row;
     gap: 13px;
-    padding: 30px 4px 74px;
+    padding: 30px 4px 63px;
 }
 
 .search__error {

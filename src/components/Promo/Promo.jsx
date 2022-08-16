@@ -2,7 +2,6 @@ import React from 'react';
 import './Promo.css';
 import landing from '../../images/landing-logo.svg';
 
-
 function Promo() {
     return (
         <section className="promo">
@@ -11,7 +10,7 @@ function Promo() {
             <img
                 className="promo__image"
                 src={landing}
-                alt="картика украшение"
+                alt="фоновая картика"
             />
             </div>
         </section>

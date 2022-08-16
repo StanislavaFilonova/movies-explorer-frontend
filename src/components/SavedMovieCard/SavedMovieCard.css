@@ -1,24 +1,26 @@
-.movie-card{
+.saved-movie-card {
     list-style-type: none;
     box-shadow: 0 4px 30px rgb(0 0 0 / 8%);
     border-radius: 6px;
+    cursor: pointer;
+    position: relative;
 }
 
-.movie-card__img{
-    width: 300px;;
+.saved-movie-card__img {
+    width: 300px;
 }
 
-.movie-card__container{
+.saved-movie-card__container {
     display: flex;
     position: relative;
 }
 
-.movie-card__info{
+.saved-movie-card__info {
     margin: 12px 0 0;
     width: 100%;
 }
 
-.movie-card__name{
+.saved-movie-card__name {
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -26,7 +28,7 @@
     margin: 0 0 0 16px;
 }
 
-.movie-card__time{
+.saved-movie-card__time {
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
@@ -35,12 +37,12 @@
     margin: 14px;
 }
 
-.movie-card__like{
+.saved-movie-card__delete {
+    background-image: url(../../images/delete.svg);
     position: absolute;
     top: 10px;
     right: 0;
     border: none;
-    background-image: url(../../images/whitelike.svg);
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 36px;
@@ -49,41 +51,33 @@
     cursor: pointer;
     background-color: inherit;
     margin-right: 12px;
+    opacity: 0;
 }
 
-.movie-card__like_active{
-    background-image: url(../../images/red.svg);
-}
-
-.movie-card__delete {
-    background-image: url(../../images/delete.svg);
+.saved-movie-card__delete:hover {
+    opacity: 1;
 }
 
 @media (min-width: 768px) {
-    .movie-card__img{
+    .saved-movie-card__img {
         width: 339px;
-    }
-
-    .movie-card__like {
-        top: 7px;
-        margin-right: 16px;
     }
 }
 
 @media (min-width: 1280px) {
-    .movie-card__img{
+    .saved-movie-card__img {
         width: 100%;
     }
-    .movie-card__info {
+    .saved-movie-card__info {
         margin: 16px 0 0;
     }
 
-    .movie-card__name {
+    .saved-movie-card__name {
         font-size: 13px;
         line-height: 16px;
     }
 
-    .movie-card__time {
+    .saved-movie-card__time {
         font-size: 11px;
         line-height: 13px;
         margin: 15px;

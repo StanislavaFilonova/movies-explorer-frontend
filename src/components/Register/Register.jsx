@@ -17,6 +17,7 @@ function Register() {
                         autoComplete='on'
                         minLength='2'
                         maxLength='30'
+                        id='register-name'
                     />
                     <span className='register__field-input-err' />
                 </div>
@@ -28,6 +29,7 @@ function Register() {
                     <input
                         className='register__field-input'
                         type='email'
+                        id='register-email'
                         required
                         name='email'
                         autoComplete='on'
@@ -44,13 +46,16 @@ function Register() {
                     <input
                         className='register__field-input'
                         type='password'
+                        id='register-password'
                         required
                         name='password'
                         autoComplete='on'
                         minLength='6'
                         maxLength='20'
                     />
-                    <span className='register__field-input-err'/>
+                    <span className='register__field-input-err'>
+                        Что-то пошло не так...
+                    </span>
                 </div>
 
             </form>
@@ -63,7 +68,6 @@ function Register() {
             </p>
         </div>
     )
-
 }
 
 export default Register;

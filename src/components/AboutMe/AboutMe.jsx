@@ -39,7 +39,6 @@ function AboutMe() {
             </div>
         </section>
     )
-
 }
 
 export default AboutMe;

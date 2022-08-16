@@ -83,7 +83,7 @@
 }
 
 @media (min-width: 1280px) {
-    .footer-box {
+    .footer__box {
         padding: 79px 70px 20px;
     }
 }
