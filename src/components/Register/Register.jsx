@@ -71,6 +71,7 @@ function Register(props) {
                         autoComplete='off'
                         minLength='2'
                         maxLength='15'
+                        pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
                         value={email}
                         onChange={handleEmailChange}
                     />

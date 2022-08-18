@@ -20,7 +20,7 @@ class Auth {
      * @param {String} password Пароль пользователя, необходимый для регистрации
      */
     register(name, email, password) {
-        return fetch(`${this._baseUrl}/signup`, {
+        return fetch(`${this._baseUrl}/sign-up`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -28,6 +28,24 @@ class Auth {
             },
             body: JSON.stringify({
                 name: name,
+                email: email,
+                password: password,
+            }),
+        }).then(this._checkResponse);
+    }
+
+    /**
+     * Метод запроса для авторизации пользователя на сервере
+     * @param {String} email Почтовый адрес пользователя, необходимый для авторизации
+     * @param {String} password Пароль пользователя, необходимый для авторизации
+     */
+    login(email, password) {
+        return fetch(`${this._baseUrl}/sign-in`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
                 email: email,
                 password: password,
             }),

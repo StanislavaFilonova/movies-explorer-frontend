@@ -17,14 +17,14 @@ function App() {
     const history = useHistory();
 
     // Проверяем зарегистрирован ли пользователь
-    function handleIsRegister(userName, userEmail, userPassword, resetForm) {
+    function handleIsRegister(userName, userEmail, userPassword,  resetForm) {
         auth.register(userName, userEmail, userPassword)
             .then((res) => {
                 console.log("200 - всё корректно заполнено");
                 // setIsInfoToolTipPopup({ status: true, open: true });
                 // setIsInfoToolTipPopupOpen(true);
                 // setIsSuccess(true);
-                history.push("/signin");
+                history.push("/sign-in");
                 resetForm();
             })
             .catch((err) => {
@@ -36,6 +36,31 @@ function App() {
                 // setIsSuccess(false);
             });
     }
+
+    function handleIsLogin(userEmail, userPassword, resetForm) {
+        auth.login(userEmail, userPassword)
+            .then((res) => {
+                if (res.token) {
+                    localStorage.setItem("jwt", res.token);
+                    resetForm();
+                    // setIsLoggedIn(true);
+                    // setEmail(email);
+                    history.push("/home");
+                }
+            })
+            .catch((err) => {
+                if (err.status === 400) {
+                    console.log("400 - не передано одно из полей");
+                    // setIsSuccess(false);
+                    // setIsInfoToolTipPopupOpen(true);
+                } else if (err.status === 401) {
+                    console.log("401 - пользователь с email не найден");
+                    // setIsInfoToolTipPopupOpen(true);
+                }
+                // setIsInfoToolTipPopup({ status: false, open: true });
+            });
+    }
+
     return (
         <div className="page">
             <Header/>
@@ -50,7 +75,10 @@ function App() {
                     />
                 </Route>
                 <Route exact path="/sign-in">
-                    <Login />
+                    <Login
+                        onLogin={handleIsLogin}
+                        history={history}
+                    />
                 </Route>
                 <Route exact path="/profile">
                     <Profile />

@@ -1,10 +1,38 @@
 import '../Login/Login.css';
+import React from "react";
 
-function Login() {
+function Login(props) {
+
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+
+
+    function handleEmailChange(ev) {
+        setEmail(ev.target.value);
+    }
+
+    function handlePasswordChange(ev) {
+        setPassword(ev.target.value);
+    }
+
+    // очистка данных формы
+    function resetForm() {
+        setEmail("");
+        setPassword("");
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (!email || !password) {
+            return;
+        }
+        props.onLogin(email, password, resetForm);
+    }
+
     return(
         <div className='login'>
             <h2 className='login__title'>Рады видеть!</h2>
-            <form className='login__form'>
+            <form className='login__form' onSubmit={handleSubmit}>
 
                 <div className='login__field'>
                     <label className='login__field-hint'>
@@ -19,6 +47,8 @@ function Login() {
                         autoComplete='on'
                         minLength='2'
                         maxLength='15'
+                        value={email}
+                        onChange={handleEmailChange}
                     />
                     <span className='login__field-input-err' />
                 </div>
@@ -36,6 +66,8 @@ function Login() {
                         autoComplete='on'
                         minLength='6'
                         maxLength='20'
+                        value={password}
+                        onChange={handlePasswordChange}
                     />
                     <span className='login__field-input-err'/>
                 </div>
