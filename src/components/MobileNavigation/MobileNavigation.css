@@ -1,0 +1,190 @@
+.menu-burger__close-btn {
+    position: absolute;
+    top: 25px;
+    right: 10px;
+    z-index: 200;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-burger__close-btn-img {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    margin: 0;
+    z-index: 200;
+}
+
+.menu-burger {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    background: transparent url(./../../images/burger.svg);
+    right: 4.4%;
+    top: 16px;
+    display: block;
+    cursor: pointer;
+    position: absolute;
+
+}
+
+.menu-burger__bar {
+    width: 22px;
+    height: 2px;
+}
+
+.mobile-navigation {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: #FAFAFA;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    z-index: 100;
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+    transition: right 0.5s;
+}
+
+.mobile-navigation__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobile-navigation__menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 144px 0 auto;
+}
+
+.mobile-navigation__link {
+    display: block;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+    text-decoration: none;
+    margin: 0 0 24px;
+}
+
+.mobile-navigation__link_type_active {
+    border-bottom: 2px solid black;
+    padding: 0 0 7px;
+    box-sizing: border-box;
+}
+
+.mobile-navigation__profile-button {
+    width: 100px;
+    height: 32px;
+    cursor: pointer;
+    background: #f9f9f9;
+    border-radius: 20px;
+    border: 2px solid #AAAAAA;
+    padding: 0;
+    margin: 444px auto 46px;
+    z-index: 100;
+    position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.mobile-navigation__profile-button-text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000;
+}
+
+.mobile-navigation__profile-button-icon {
+    align-items: center;
+    background-color: inherit;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    padding: 9px;
+}
+
+.mobile-navigation__profile-button-icon-img {
+    height: 14px;
+    width: 12px;
+    background: transparent url(./../../images/person.svg);
+}
+.cover {
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    height: 100vh;
+}
+
+
+@media (min-width: 768px) {
+    .mobile-navigation {
+        width: 65%
+    }
+
+    .mobile-navigation__wrapper {
+    }
+
+    .mobile-navigation__menu {
+        margin-top: 159px;
+    }
+
+    .mobile-navigation__link {
+        margin: 0 0 28px;
+    }
+
+    .menu-burger__close-btn {
+        top: 22px;
+        right: 20px;
+    }
+
+    .menu-burger {
+        right: 4%;
+        top: 15px;
+    }
+    .mobile-navigation__profile-button {
+        margin: 618px auto 46px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .mobile-navigation {
+        display: none;
+        justify-content: center;
+    }
+
+    .menu-burger {
+        display: none;
+        position: relative;
+    }
+
+    .cover {
+        display: none;
+    }
+
+    .menu-burger__close-btn {
+        display: none;
+    }
+}

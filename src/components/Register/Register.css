@@ -1,0 +1,130 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 396px;
+    margin: auto;
+    background-color: #FFFFFF;
+}
+
+.register__title {
+    text-align: center;
+    margin: 50px 0 80px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.register__form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    width: 260px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.register__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.register__field-hint {
+    color: #a0a0a0;
+    font-size: 10px;
+    line-height: 12px;
+    margin: 0 0 10px;
+}
+
+.register__field-input {
+    background-color: #F4F4F4;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-size: 13px;
+    height: 46px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    padding: 0 15px;
+}
+
+.register__field-input-err {
+    color: #ee3465;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+}
+
+.register__button {
+    margin: 157px 30px 14px;
+    font-size: 12px;
+    line-height: 15px;
+    width: 260px;
+    height: 45px;
+    padding: 0;
+    align-items: center;
+    border: none;
+    box-sizing: border-box;
+    background: #3456F3;
+    border-radius: 3px;
+    font-weight: 500;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.register__button:hover {
+    opacity: 0.8;
+}
+
+.register__redirect {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    color: #a0a0a0;
+    text-align: center;
+    margin: 0 0 30px;
+}
+
+.register__link {
+    color: #3456F3;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    transition: .4s ease-in-out;
+}
+
+@media (min-width: 768px) {
+    .register {
+        margin-top: 40px;
+    }
+
+    .register__title {
+        margin: 0 0 40px;
+        text-align: left;
+    }
+
+    .register__form {
+        width: 396px;
+    }
+
+    .register__button {
+        margin: 69px 0 16px;
+        font-size: 14px;
+        line-height: 17px;
+        width: 396px;
+    }
+
+    .register__redirect {
+        font-size: 14px;
+        line-height: 17px;
+        margin: 0;
+    }
+
+    .register__link {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}

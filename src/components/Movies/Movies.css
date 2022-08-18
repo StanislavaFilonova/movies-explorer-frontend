@@ -1,0 +1,27 @@
+.movies{
+    max-width: 1280px;
+    background-color: #FAFAFA;
+    padding-bottom: 80px;
+}
+
+.movies__more-button{
+    width: 320px;
+    margin: 50px auto 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    border-radius: 6px;
+    border: 1px solid #E8E8E8;
+    padding: 11px 60px 9px;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #F4F4F4;
+}
+
+@media(max-width: 600px) {
+    .movies__more-button{
+        width: 240px;
+    }
+}

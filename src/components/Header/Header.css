@@ -1,0 +1,155 @@
+.header {
+    padding: 18px 14px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FAFAFA;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+}
+
+.header_grey {
+    background-color: #DDDEE3;
+}
+
+.header_welcome {
+    padding: 56px 0 0;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF
+}
+
+.header__logo {
+    margin: 0;
+    padding: 0;
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
+
+.header__logo-click {
+    transition: .4s ease-in-out;
+}
+
+.header__logo-click:hover {
+    opacity: 0.6;
+}
+
+.header__link_navigation{
+    display: none;
+}
+
+.header-navigation__profile-button{
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .header {
+        padding: 18px 30px;
+    }
+
+    .header_welcome {
+        padding: 232px 0 0;
+        max-width: 396px;
+        margin: 0 auto;
+        justify-content: space-between;
+    }
+
+}
+
+@media (min-width: 1280px) {
+    .header {
+        padding: 18px 70px;
+    }
+
+    .header_welcome {
+        padding: 70px 0 0;
+        margin: 0 auto;
+    }
+
+    .header__profile-img {
+        background-image: url(../../images/person.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 100px;
+        height: 32px;
+        cursor: pointer;
+        padding: 0;
+        border: none;
+        background-color: #FFFFFF;
+    }
+
+    .header-navigation__profile-button {
+        width: 100px;
+        height: 32px;
+        cursor: pointer;
+        background: #f9f9f9;
+        border-radius: 20px;
+        border: 2px solid #AAAAAA;
+        padding: 0;
+        margin: 0;
+        z-index: 100;
+        position: relative;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .header-navigation__profile-button:hover {
+        opacity: 0.6;
+    }
+
+    .header-navigation__profile-button-icon {
+        align-items: center;
+        background-color: inherit;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        padding: 9px;
+    }
+
+    .header-navigation__profile-button-icon-img {
+        height: 14px;
+        width: 12px;
+        background: transparent url(./../../images/person.svg);
+    }
+
+    .header-navigation__profile-button-text {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #000;
+    }
+
+    .header__container{
+        align-self: center;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        margin-left: 84px;
+    }
+
+    .header__link{
+        text-decoration: none;
+        color: black;
+        margin-right: 30px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .header__link_navigation{
+        display: flex;
+        color: #000000;
+        margin: 0 16px 0 0;
+    }
+
+    .header__link_navigation:last-of-type{
+        margin: 0;
+    }
+}

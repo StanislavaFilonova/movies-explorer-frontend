@@ -1,0 +1,32 @@
+.page {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+    margin: 0;
+    font-weight: 400;
+    font-size: 12px;
+    color: black;
+}
+
+.page__container {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+    max-width: 1280px;
+    min-width: 320px;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.active__link {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    transition: .4s ease-in-out;
+}
+
+.active__link:hover {
+    opacity: 0.6;
+}

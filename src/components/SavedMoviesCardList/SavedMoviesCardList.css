@@ -1,0 +1,35 @@
+.saved-movies-list{
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    background: #F4F4F4;
+}
+
+.saved-movies-list__cards{
+    width: 100%;
+    display: grid;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    list-style: none;
+    justify-items: center;
+    margin: 0 auto 30px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+@media (min-width: 768px) {
+    .saved-movies-list__cards{
+        grid-template-columns: repeat(auto-fit, minmax(339px, 1fr));
+        gap: 30px;
+        max-width: 708px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .saved-movies-list__cards {
+        grid-template-columns: repeat(auto-fit, minmax(364px, 1fr));
+        gap: 38px 20px;
+        max-width: 1140px;
+    }
+}
