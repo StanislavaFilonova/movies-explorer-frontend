@@ -27,9 +27,9 @@ function MoviesCard ({ card, onCardLike }) {
             <div className='movie-card__container'>
                 <div className='movie-card__info'>
                     <h2 className='movie-card__name'>{card.nameRU}</h2>
-                    <p className='movie-card__time'>{`${card.duration} мин`}</p>
+                    <button className='movie-card__like' type='button' onClick={handleLike}></button>
                 </div>
-                <button className='movie-card__like' type='button' onClick={handleLike}></button>
+                <p className='movie-card__time'>{`${card.duration} мин`}</p>
             </div>
         </li>
     )

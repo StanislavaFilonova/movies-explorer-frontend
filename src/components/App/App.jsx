@@ -19,7 +19,7 @@ import api from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 
 
-function App() {
+function App(movie) {
 
     // Создаем хуки, управляющие внутренним состоянием.
     const [cards, setCards] = React.useState([]);
@@ -110,7 +110,7 @@ function App() {
             mainApi
                 .putMovieLike(movie, !isLiked)
                 .then((res) => {
-                    const newSavedMovies = [res.data, ...saveMoviesCard];
+                    const newSavedMovies = [res.movie, ...saveMoviesCard];
                     setSaveMoviesCard(newSavedMovies);
                     res.isLiked = true;
                 })

@@ -1,3 +1,5 @@
+const MOVIES_IMAGE_BASE_URL = 'https://api.nomoreparties.co';
+
 class MainApi {
     constructor({baseUrl, headers}) {
         this._baseUrl = baseUrl;
@@ -20,7 +22,7 @@ class MainApi {
      * Метод постановки лайка на фильм => перенос фильма в коллекцию сохраненных
      * @param {String} movie фильм
      */
-    putMovieLike(movie){
+    putMovieLike(data){
         return fetch(`${this._baseUrl}/movies`, {
             method: "POST",
             headers: {
@@ -28,7 +30,19 @@ class MainApi {
                 credentials: 'include',
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`,
             },
-            body: JSON.stringify(movie),
+            body: JSON.stringify({
+                country: data.country || " ",
+                director: data.director || ' ',
+                duration: data.duration || ' ',
+                year: data.year || ' ',
+                description: data.description || ' ',
+                image: `${MOVIES_IMAGE_BASE_URL}${data.image.url}` || ' ',
+                trailerLink: data.trailerLink || ' ',
+                thumbnail: `${MOVIES_IMAGE_BASE_URL}${data.image.formats.thumbnail.url}` || ' ',
+                movieId: data.id || ' ',
+                nameRU: data.nameRU || ' ',
+                nameEN: data.nameEN || ' ',
+            }),
         }).then(this._checkResponse);
     }
 }
