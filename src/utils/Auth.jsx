@@ -51,6 +51,22 @@ class Auth {
             }),
         }).then(this._checkResponse);
     }
+
+    /**
+     * Метод запроса для проверки валидности токена и получения email для вставки в шапку сайта
+     * @param {String} token Токен пользователя, необходимый для авторизации/регистрации
+     */
+    checkToken(token) {
+        return fetch(`${this._baseUrl}/users/me`, {
+            //эдпойнт
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        }).then(this._checkResponse);
+    }
 }
 
 const auth = new Auth({

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+// ---------------------------------------------------------------------------------------
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -7,12 +8,15 @@ import Login from '../Login/Login';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import PageNotFound from '../PageNotFound/PageNotFound';
-import Footer from '../Footer/Footer';
-import './App.css';
 import Profile from "../Profile/Profile";
-import auth from "../../utils/Auth";
+import Footer from '../Footer/Footer';
+// import ProtectedRoute from "../ProtectedRoute";
 
+import './App.css';
+
+import auth from "../../utils/Auth";
 import api from "../../utils/MoviesApi";
+
 
 function App() {
 
@@ -41,6 +45,37 @@ function App() {
         }
     }, [isLoggedIn]);
 
+//---------------------------------------------------------------------------------------------------------------------
+
+    // Хук для проверки токена при каждом монтировании компонента App
+    React.useEffect(
+        () => {
+            handleIsToken();
+        }, // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    );
+
+//---------------------------------------------------------------------------------------------------------------------
+
+    function handleIsToken() {
+        const jwt = localStorage.getItem("jwt");
+        if (!jwt) {
+            return
+        }
+        auth
+            .checkToken(jwt)
+            .then((res) => {
+                if(res) {
+                    setIsLoggedIn(true);
+                    history.push("/movies");
+                }
+            })
+            .catch(() => {
+                console.log("Переданный токен некорректен.");
+                setIsLoggedIn(false);
+            });
+    }
+
     // Проверяем зарегистрирован ли пользователь
     function handleIsRegister(userName, userEmail, userPassword,  resetForm) {
         auth.register(userName, userEmail, userPassword)
@@ -68,9 +103,9 @@ function App() {
                 if (res.token) {
                     localStorage.setItem("jwt", res.token);
                     resetForm();
-                    // setIsLoggedIn(true);
+                    setIsLoggedIn(true);
                     // setEmail(email);
-                    history.push("/home");
+                    history.push("/");
                 }
             })
             .catch((err) => {
@@ -93,7 +128,7 @@ function App() {
                 <Route
                     exact path="/"
                 >
-                    <Main />
+                    <Main/>
                 </Route>
                 <Route exact path="/sign-up">
                     <Register
@@ -111,7 +146,8 @@ function App() {
                     <Profile />
                 </Route>
                 <Route
-                    exact path="/movies">
+                    exact
+                    path="/movies">
                     isLoggedIn={isLoggedIn}
                     cards={cards}
                     component={Movies}
