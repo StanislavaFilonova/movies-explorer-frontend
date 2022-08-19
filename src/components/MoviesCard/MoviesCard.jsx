@@ -21,7 +21,7 @@ function MoviesCard ({ card, onCardLike }) {
             <img
                 className='movie-card__img'
                 alt={`Кадр из фильма ${card.nameRU}`}
-                src={`${MOVIES_SERVER_URL}${card.image.url}`} // В постмане у карточки фильма должно быть такое свойство?
+                src={`${MOVIES_SERVER_URL}${card.image.url}`}
             />
             </a>
             <div className='movie-card__container'>

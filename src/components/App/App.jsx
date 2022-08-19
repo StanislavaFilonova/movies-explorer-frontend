@@ -16,6 +16,7 @@ import './App.css';
 
 import auth from "../../utils/Auth";
 import api from "../../utils/MoviesApi";
+import mainApi from "../../utils/MainApi";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
     // Создаем хуки, управляющие внутренним состоянием.
     const [cards, setCards] = React.useState([]);
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const [saveMoviesCard, setSaveMoviesCard] = React.useState([]);
 
     const history = useHistory();
 
@@ -96,6 +98,27 @@ function App() {
                 // setIsSuccess(false);
             });
     }
+    // проверка состояния лайка
+    function checkLikeSaveMovie(movie) {
+        return saveMoviesCard.some((i) => i.movieId === movie.id);
+    }
+
+    // Функция постановки лайка фильму и его дальнейщее сохранение
+    function handleMovieLike (movie) {
+        const isLiked = checkLikeSaveMovie(movie);
+        if(!isLiked){
+            mainApi
+                .putMovieLike(movie, !isLiked)
+                .then((res) => {
+                    const newSavedMovies = [res.data, ...saveMoviesCard];
+                    setSaveMoviesCard(newSavedMovies);
+                    res.isLiked = true;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }
 
     function handleIsLogin(userEmail, userPassword, resetForm) {
         auth.login(userEmail, userPassword)
@@ -145,12 +168,12 @@ function App() {
                 <Route exact path="/profile">
                     <Profile />
                 </Route>
-                <Route
-                    exact
-                    path="/movies">
+                <Route exact path="/movies">
+                    <Movies
                     isLoggedIn={isLoggedIn}
                     cards={cards}
-                    component={Movies}
+                    onCardLike={handleMovieLike}
+                    />
                 </Route>
                 <Route exact path="/saved-movies">
                     <SavedMovies />
