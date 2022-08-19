@@ -12,9 +12,34 @@ import './App.css';
 import Profile from "../Profile/Profile";
 import auth from "../../utils/Auth";
 
+import api from "../../utils/MoviesApi";
+
 function App() {
 
+    // Создаем хуки, управляющие внутренним состоянием.
+    const [cards, setCards] = React.useState([]);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
     const history = useHistory();
+
+    //---------------------------------------------------------------------------------------------------------------------
+
+    // Настраиваем хук, который устанавливает колбэки. Функция будет вызвана после того, как будут внесены все изменения в DOM.
+    React.useEffect(() => {
+        // setIsLoading(true);
+        // Чтение данных с сервера (информация о пользователе и карточках)
+        // Проверим, авторизован ли пользователь
+        if (isLoggedIn) {
+            Promise.all([api.getMoviesCards()])
+                .then(([cards]) => {
+                    setCards(cards);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+                .finally(() => console.log("200"));
+        }
+    }, [isLoggedIn]);
 
     // Проверяем зарегистрирован ли пользователь
     function handleIsRegister(userName, userEmail, userPassword,  resetForm) {
@@ -65,7 +90,9 @@ function App() {
         <div className="page">
             <Header/>
             <Switch>
-                <Route exact path="/">
+                <Route
+                    exact path="/"
+                >
                     <Main />
                 </Route>
                 <Route exact path="/sign-up">
@@ -83,8 +110,11 @@ function App() {
                 <Route exact path="/profile">
                     <Profile />
                 </Route>
-                <Route exact path="/movies">
-                    <Movies />
+                <Route
+                    exact path="/movies">
+                    isLoggedIn={isLoggedIn}
+                    cards={cards}
+                    component={Movies}
                 </Route>
                 <Route exact path="/saved-movies">
                     <SavedMovies />

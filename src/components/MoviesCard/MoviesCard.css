@@ -59,6 +59,12 @@
     background-image: url(../../images/delete.svg);
 }
 
+.movie-card__trailer {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
 @media (min-width: 768px) {
     .movie-card__img{
         width: 339px;

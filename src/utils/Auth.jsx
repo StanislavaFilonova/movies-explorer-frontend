@@ -55,7 +55,7 @@ class Auth {
 
 const auth = new Auth({
     // baseUrl: "https://auth.nomoreparties.co",
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "https://diploma-movies-filonova.nomoredomains.xyz",
 });
 
 export default auth;

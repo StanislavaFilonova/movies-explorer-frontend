@@ -2,22 +2,20 @@ import React from "react";
 import './MoviesCardList.css';
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList () {
+function MoviesCardList ({ onCardLike, cards }) {
     return(
         <section className='movies-list'>
             <ul className='movies-list__cards'>
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
+                {cards.map((card) => (
+                    <MoviesCard
+                        key={card.id}
+                        card={card}
+                        onCardLike={onCardLike}
+                        name={card.nameRU}
+                        duration={card.duration}
+                        {...card}
+                    />
+                ))}
             </ul>
         </section>
     )

@@ -5,14 +5,18 @@ import './Movies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from "../Preloader/Preloader";
 
-function Movies() {
+function Movies({ onCardLike, cards }) {
     return (
             <section className="movies">
                 <SearchForm/>
-                <MoviesCardList />
+                <MoviesCardList
+                    onCardLike={onCardLike}
+                    cards={cards}
+                />
                     <button
                         className="movies__more-button"
                         type='button'
+                        // не знаю, какое событие на нее ставить
                     >
                         Ещё
                     </button>

@@ -6,7 +6,6 @@ function Login(props) {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-
     function handleEmailChange(ev) {
         setEmail(ev.target.value);
     }
@@ -71,11 +70,11 @@ function Login(props) {
                     />
                     <span className='login__field-input-err'/>
                 </div>
+                <button
+                    type="submit"
+                    className="login__button"> Войти
+                </button>
             </form>
-            <button
-                type="submit"
-                className="login__button"> Войти
-            </button>
             <p className="login__redirect">Ещё не зарегистрированы?&nbsp;
                 <a className="login__link" href="/sign-up">Регистрация</a>
             </p>

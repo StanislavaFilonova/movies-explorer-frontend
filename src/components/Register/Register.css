@@ -78,6 +78,13 @@
     opacity: 0.8;
 }
 
+.register__button:disabled {
+    background-color: black;
+    border-radius: 6px;
+    color: rgb(255, 255, 255);
+    cursor: default;
+}
+
 .register__redirect {
     font-size: 12px;
     font-weight: 400;

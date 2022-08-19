@@ -98,12 +98,12 @@ function Register(props) {
                         Что-то пошло не так...
                     </span>
                 </div>
-
+                <button
+                    type="submit"
+                    className="register__button"
+                    disabled={!(name || email || password)}> Зарегистрироваться
+                </button>
             </form>
-            <button
-                type="submit"
-                className="register__button"> Зарегистрироваться
-            </button>
             <p className="register__redirect">Уже зарегистрированы?&nbsp;
                 <a className="register__link" href="/sign-in">Войти</a>
             </p>
