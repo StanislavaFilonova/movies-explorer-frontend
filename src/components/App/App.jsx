@@ -36,10 +36,25 @@ function App(movie) {
         // Чтение данных с сервера (информация о пользователе и карточках)
         // Проверим, авторизован ли пользователь
         if (isLoggedIn) {
-            Promise.all([api.getMoviesCards()])
-                .then(([cards]) => {
-                    setCards(cards);
-                })
+            Promise.all([
+                api.getMoviesCards(), // 1й вызов, идет на сервер за данными внешними
+                mainApi.getSavedMovies() //2й параллельный вызов, идет на свой сервер за сохраненными фильмами
+            ]).then(([cards, savedCards]) => {
+                // обойдем все карточки: наши сохраненные и с сервера и найдем полайканные (сохраненные у нас)
+                const saveFilmIds = [];
+                savedCards.forEach((item, i, arr) => {
+                    saveFilmIds.push(item.movieId)
+                });
+                cards.forEach((item, i, arr) => {
+                    if (saveFilmIds.includes(item.id))
+                        item.isLiked = true;
+                    else
+                        item.isLiked = false;
+                });
+
+                setSaveMoviesCard(savedCards); // локально храним все сохраненные ранее карточки
+                setCards(cards); // рисуем все пришедшие карточки с сайта фильмов
+            })
                 .catch((err) => {
                     console.log(err);
                 })
@@ -48,6 +63,17 @@ function App(movie) {
     }, [isLoggedIn]);
 
 //---------------------------------------------------------------------------------------------------------------------
+    React.useEffect(() => {
+        mainApi.getSavedMovies().then((movies) => {
+            setSaveMoviesCard(movies);
+        }).catch((err) => {
+            console.log("Не удалось получить список фильмов."
+            );
+            console.log(err);
+        })
+        }, []);
+
+    //---------------------------------------------------------------------------------------------------------------------
 
     // Хук для проверки токена при каждом монтировании компонента App
     React.useEffect(
@@ -100,7 +126,7 @@ function App(movie) {
     }
     // проверка состояния лайка
     function checkLikeSaveMovie(movie) {
-        return saveMoviesCard.some((i) => i.movieId === movie.id);
+        return saveMoviesCard.some((i) => i === movie.id);
     }
 
     // Функция постановки лайка фильму и его дальнейщее сохранение
@@ -110,7 +136,7 @@ function App(movie) {
             mainApi
                 .putMovieLike(movie, !isLiked)
                 .then((res) => {
-                    const newSavedMovies = [res.movie, ...saveMoviesCard];
+                    const newSavedMovies = [res, ...saveMoviesCard];
                     setSaveMoviesCard(newSavedMovies);
                     res.isLiked = true;
                 })

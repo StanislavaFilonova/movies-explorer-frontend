@@ -6,7 +6,7 @@ const MOVIES_SERVER_URL  = "https://api.nomoreparties.co";
 function MoviesCard ({ card, onCardLike }) {
 
     function handleLike() {
-        onCardLike(card); // Должна ли эта функция еще шде-то прописана? например в MoviesApi?
+        onCardLike(card);
     }
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ function MoviesCard ({ card, onCardLike }) {
             <div className='movie-card__container'>
                 <div className='movie-card__info'>
                     <h2 className='movie-card__name'>{card.nameRU}</h2>
-                    <button className='movie-card__like' type='button' onClick={handleLike}></button>
+                    <button className="movie-card__like"  type='button' onClick={handleLike}></button>
                 </div>
                 <p className='movie-card__time'>{`${card.duration} мин`}</p>
             </div>
