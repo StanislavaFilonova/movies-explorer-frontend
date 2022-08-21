@@ -62,6 +62,16 @@
 
 .movie-card__like_active{
     background-image: url(../../images/red.svg);
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 36px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: inherit;
+    margin-right: 12px;
+    display: inline-block;
 }
 
 .movie-card__delete {

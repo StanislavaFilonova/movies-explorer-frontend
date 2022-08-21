@@ -1,14 +1,20 @@
 import React from "react";
-import '../MoviesCardList/MoviesCardList.css';
+import '../SavedMoviesCardList/SavedMoviesCardList.css';
 import SavedMovieCard from "../SavedMovieCard/SavedMovieCard";
 
-function SavedMoviesCardList () {
+function SavedMoviesCardList ({savedCards}) {
     return(
         <section className='saved-movies-list'>
             <ul className='saved-movies-list__cards'>
-                <SavedMovieCard />
-                <SavedMovieCard />
-                <SavedMovieCard />
+                {savedCards.map((card) => (
+                    <SavedMovieCard
+                        key={card.movieId}
+                        card={card}
+                        name={card.nameRU}
+                        duration={card.duration}
+                        {...card}
+                    />
+                ))}
             </ul>
         </section>
     )

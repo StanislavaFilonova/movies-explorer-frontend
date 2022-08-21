@@ -1,16 +1,17 @@
 import React from "react";
 
-// function handleNameChange(ev) {
-//     setName(ev.target.value);
-// }
-//
-// function handleEmailChange(ev) {
-//     setEmail(ev.target.value);
-// }
-//
-// function handlePasswordChange(ev) {
-//     setPassword(ev.target.value);
-// }
+export function useForm() {
+    const [values, setValues] = React.useState({});
+
+    const handleChange = (evt) => {
+        const input = evt.target;
+        const { value } = input;
+        const { name } = input;
+        setValues({ ...values, [name]: value });
+    };
+
+    return { values, handleChange, setValues };
+}
 
 // хук управления формой и валидации формы
 export function useFormWithValidation() {
@@ -43,3 +44,4 @@ export function useFormWithValidation() {
 
     return { values, handleChange, errors, isValid, resetForm };
 }
+

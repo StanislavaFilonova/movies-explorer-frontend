@@ -1,37 +1,53 @@
 import './Register.css';
 import React from "react";
+import { useFormWithValidation } from "../../utils/Validation";
 
 function Register(props) {
-    const [name, setName] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
-    function handleNameChange(ev) {
-        setName(ev.target.value);
-    }
+    React.useEffect(() => {
+        resetForm({});
+    }, []);
 
-    function handleEmailChange(ev) {
-        setEmail(ev.target.value);
-    }
-
-    function handlePasswordChange(ev) {
-        setPassword(ev.target.value);
-    }
-
-    // очистка данных формы
-    function resetForm() {
-        setName("");
-        setEmail("");
-        setPassword("");
-    }
-
-    function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (!name || !email || !password) {
+        if (!values.email || !values.password) {
             return;
         }
-        props.onRegister(name, email, password, resetForm);
-    }
+        const { name, password, email } = values;
+        props.onRegister({ name, password, email });
+    };
+
+    // const [name, setName] = React.useState("");
+    // const [email, setEmail] = React.useState("");
+    // const [password, setPassword] = React.useState("");
+
+    // function handleNameChange(ev) {
+    //     setName(ev.target.value);
+    // }
+    //
+    // function handleEmailChange(ev) {
+    //     setEmail(ev.target.value);
+    // }
+    //
+    // function handlePasswordChange(ev) {
+    //     setPassword(ev.target.value);
+    // }
+
+    // // очистка данных формы
+    // function resetForm() {
+    //     setName("");
+    //     setEmail("");
+    //     setPassword("");
+    // }
+
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     if (!name || !email || !password) {
+    //         return;
+    //     }
+    //     props.onRegister(name, email, password, resetForm);
+    // }
 
     return(
         <div className='register'>
@@ -52,10 +68,10 @@ function Register(props) {
                         autoComplete='off'
                         minLength='2'
                         maxLength='30'
-                        value={name}
-                        onChange={handleNameChange}
+                        value={values.name || ""}
+                        onChange={handleChange}
                     />
-                    <span className='register__field-input-err' />
+                    <span className='register__field-input-err'> {errors.name} </span>
                 </div>
 
                 <div className='register__field'>
@@ -70,12 +86,11 @@ function Register(props) {
                         name='email'
                         autoComplete='off'
                         minLength='2'
-                        maxLength='15'
                         pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
-                        value={email}
-                        onChange={handleEmailChange}
+                        value={values.email || ""}
+                        onChange={handleChange}
                     />
-                    <span className='register__field-input-err' />
+                    <span className='register__field-input-err'> {errors.email} </span>
                 </div>
 
                 <div className='register__field'>
@@ -91,17 +106,18 @@ function Register(props) {
                         autoComplete='off'
                         minLength='6'
                         maxLength='20'
-                        value={password}
-                        onChange={handlePasswordChange}
+                        value={values.password || ""}
+                        onChange={handleChange}
                     />
                     <span className='register__field-input-err'>
-                        Что-то пошло не так...
+                        {errors.password}
                     </span>
                 </div>
                 <button
                     type="submit"
-                    className="register__button"
-                    disabled={!(name || email || password)}> Зарегистрироваться
+                    className={`register__button
+                        ${!isValid && "register__button_disabled "}`}
+                    > Зарегистрироваться
                 </button>
             </form>
             <p className="register__redirect">Уже зарегистрированы?&nbsp;

@@ -8,9 +8,7 @@ function MoviesCard ({ card, onCardLike }) {
     function handleLike() {
         onCardLike(card);
     }
-
     //---------------------------------------------------------------------------------------------------------------------
-
     return(
         <li className='movie-card'>
             <a className="movie-card__trailer"
@@ -27,7 +25,7 @@ function MoviesCard ({ card, onCardLike }) {
             <div className='movie-card__container'>
                 <div className='movie-card__info'>
                     <h2 className='movie-card__name'>{card.nameRU}</h2>
-                    <button className="movie-card__like"  type='button' onClick={handleLike}></button>
+                    <button className={`${card.cardLikeCssClass}`} type='button' onClick={handleLike}></button>
                 </div>
                 <p className='movie-card__time'>{`${card.duration} мин`}</p>
             </div>

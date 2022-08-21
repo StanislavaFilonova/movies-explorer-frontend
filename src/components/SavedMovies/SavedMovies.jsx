@@ -2,13 +2,15 @@ import SearchForm from '../SearchForm/SearchForm';
 import "./SavedMovies.css";
 import SavedMoviesCardList from "../SavedMoviesCardList/SavedMoviesCardList";
 
-function SavedMovies() {
+function SavedMovies({savedCards}) {
 
     return (
         <div>
             <section className='saved-movies'>
                 <SearchForm/>
-                <SavedMoviesCardList />
+                <SavedMoviesCardList
+                    savedCards={savedCards}
+                />
             </section>
         </div>
     )

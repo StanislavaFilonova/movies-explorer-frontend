@@ -10,7 +10,8 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Profile from "../Profile/Profile";
 import Footer from '../Footer/Footer';
-// import ProtectedRoute from "../ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute";
+import CurrentUserContext  from "../../contexts/CurrentUserContext"
 
 import './App.css';
 
@@ -25,10 +26,24 @@ function App(movie) {
     const [cards, setCards] = React.useState([]);
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
     const [saveMoviesCard, setSaveMoviesCard] = React.useState([]);
+    // Хук прочитает информацию о пользователе, под которым вошли на сайт и положит в переменную currentUser.Сработает при загрузке страницы
+    const [currentUser, setCurrentUser] = React.useState({});
 
     const history = useHistory();
 
     //---------------------------------------------------------------------------------------------------------------------
+
+    // Хук для начитки инфо об авторизованном пользователе
+    React.useEffect(() => {
+        if (isLoggedIn) {
+            mainApi.getUserInfo().then((userInfo) => {
+                setCurrentUser(userInfo);
+            }).catch((err) => {
+                console.log("Не удалось получить информацию о пользователе.");
+                console.log(err);
+            });
+        }
+    }, [isLoggedIn]);
 
     // Настраиваем хук, который устанавливает колбэки. Функция будет вызвана после того, как будут внесены все изменения в DOM.
     React.useEffect(() => {
@@ -46,10 +61,14 @@ function App(movie) {
                     saveFilmIds.push(item.movieId)
                 });
                 cards.forEach((item, i, arr) => {
-                    if (saveFilmIds.includes(item.id))
+                    if (saveFilmIds.includes(item.id)) {
+                        item.cardLikeCssClass = 'movie-card__like_active';
                         item.isLiked = true;
-                    else
+                    }
+                    else {
                         item.isLiked = false;
+                        item.cardLikeCssClass = 'movie-card__like';
+                    }
                 });
 
                 setSaveMoviesCard(savedCards); // локально храним все сохраненные ранее карточки
@@ -95,7 +114,7 @@ function App(movie) {
             .then((res) => {
                 if(res) {
                     setIsLoggedIn(true);
-                    history.push("/movies");
+                    // history.push("/movies");
                 }
             })
             .catch(() => {
@@ -105,15 +124,14 @@ function App(movie) {
     }
 
     // Проверяем зарегистрирован ли пользователь
-    function handleIsRegister(userName, userEmail, userPassword,  resetForm) {
-        auth.register(userName, userEmail, userPassword)
+    function handleIsRegister(data) {
+        auth.register(data)
             .then((res) => {
                 console.log("200 - всё корректно заполнено");
                 // setIsInfoToolTipPopup({ status: true, open: true });
                 // setIsInfoToolTipPopupOpen(true);
                 // setIsSuccess(true);
-                history.push("/sign-in");
-                resetForm();
+                history.push("/movies");
             })
             .catch((err) => {
                 if (err.status === 400) {
@@ -132,18 +150,21 @@ function App(movie) {
     // Функция постановки лайка фильму и его дальнейщее сохранение
     function handleMovieLike (movie) {
         const isLiked = checkLikeSaveMovie(movie);
+        let cardLikeCssClass;
         if(!isLiked){
             mainApi
-                .putMovieLike(movie, !isLiked)
+                .putMovieLike(movie, !isLiked, cardLikeCssClass)
                 .then((res) => {
                     const newSavedMovies = [res, ...saveMoviesCard];
                     setSaveMoviesCard(newSavedMovies);
                     res.isLiked = true;
+                    res.cardLikeCssClass = 'movie-card__like';
                 })
                 .catch((err) => {
                     console.log(err);
                 });
         }
+        movie.cardLikeCssClass ='movie-card__like_active';
     }
 
     function handleIsLogin(userEmail, userPassword, resetForm) {
@@ -172,6 +193,7 @@ function App(movie) {
 
     return (
         <div className="page">
+            <CurrentUserContext.Provider value={currentUser}>
             <Header/>
             <Switch>
                 <Route
@@ -192,24 +214,32 @@ function App(movie) {
                     />
                 </Route>
                 <Route exact path="/profile">
-                    <Profile />
+                    <Profile
+                        isLoggedIn={isLoggedIn}
+                        currentUser={currentUser}
+                    />
                 </Route>
                 <Route exact path="/movies">
                     <Movies
                     isLoggedIn={isLoggedIn}
                     cards={cards}
+                    savedCards={saveMoviesCard}
                     onCardLike={handleMovieLike}
                     />
                 </Route>
-                <Route exact path="/saved-movies">
-                    <SavedMovies />
-                </Route>
+                <ProtectedRoute exact path="/saved-movies">
+                    <SavedMovies
+                        isLoggedIn={isLoggedIn}
+                        savedCards={saveMoviesCard}
+                    />
+                </ProtectedRoute>
                 <Route path="*">
                     <PageNotFound />
                 </Route>
             </Switch>
 
             <Footer />
+            </CurrentUserContext.Provider>
         </div>
     )
 }

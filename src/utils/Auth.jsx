@@ -19,7 +19,7 @@ class Auth {
      * @param {String} email Почтовый адрес пользователя, необходимый для регистрации
      * @param {String} password Пароль пользователя, необходимый для регистрации
      */
-    register(name, email, password) {
+    register({name, email, password}) {
         return fetch(`${this._baseUrl}/sign-up`, {
             method: "POST",
             headers: {
