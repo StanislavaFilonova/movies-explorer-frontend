@@ -1,14 +1,16 @@
-import './Register.css';
 import React from "react";
+import './Register.css';
 import { useFormWithValidation } from "../../utils/Validation";
 
 function Register(props) {
     const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
+    // Хук для очистки формы
     React.useEffect(() => {
         resetForm({});
     }, []);
 
+    // Функция, которая проверяет введены ли эмейл и пароль, закидывает введенные занчения в свои ячейки
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!values.email || !values.password) {
@@ -52,6 +54,7 @@ function Register(props) {
     return(
         <div className='register'>
             <h2 className='register__title'>Добро пожаловать!</h2>
+
             <form className='register__form' name="form-register" onSubmit={handleSubmit}>
                 <div className='register__field'>
                     <label className='register__field-hint'>
@@ -112,7 +115,9 @@ function Register(props) {
                     <span className='register__field-input-err'>
                         {errors.password}
                     </span>
+                    <span className="register__field-input-err">{props.message}</span>
                 </div>
+
                 <button
                     type="submit"
                     className={`register__button

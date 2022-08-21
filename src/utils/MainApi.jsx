@@ -19,6 +19,55 @@ class MainApi {
     }
 
     /**
+     * Метод получения информации о текущем пользователе (кто авторизован) на сервере
+     * Api метод чтения инфо о пользователе (для заполнения currentUser в App.jsx
+     */
+    getUserInfo() {
+        return fetch(`${this._baseUrl}/users/me`, {
+            method:"GET",
+            headers: {
+                Accept: 'application/json',
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json',
+            },
+        }).then(this._checkResponse);
+    }
+
+    /**
+     * Метод редактирования профиля пользователя
+     * API функция для изменения профиля пользователя (со страницы профиля при нажатии на кнопку сохранения)
+     * @param {Object} userData Данные о пользователе
+     * userData.name {String}
+     * userData.about {String}
+     */
+    editProfile(userData) {
+        if (!userData.name) {
+            console.error(
+                "MainApi.editProfile в аргументе userData не передано обязательное поле 'name'. Запрос не будет выполнен."
+            );
+            return;
+        }
+        if (!userData.email) {
+            console.error(
+                "MainApi.editProfile в аргументе userData не передано обязательное поле 'email'. Запрос не будет выполнен."
+            );
+            return;
+        }
+        const url = `${this._baseUrl}/users/me`;
+
+        const opts = {
+            method: "PATCH",
+            headers: {
+                Accept: 'application/json',
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        };
+        return fetch(url, opts).then(this._checkResponse);
+    }
+
+    /**
      * Метод постановки лайка на фильм => перенос фильма в коллекцию сохраненных
      * @param {String} data фильм
      */
@@ -61,52 +110,21 @@ class MainApi {
     }
 
     /**
-     * Метод получения информации о текущем пользователе (кто авторизован) на сервере
-     * Api метод чтения инфо о пользователе (для заполнения currentUser в App.jsx
+     * Метод уадления фильма из сохраненных фильмов пользователя с сервера
      */
-    getUserInfo() {
-        return fetch(`${this._baseUrl}/users/me`, {
+    deleteMovie(id) {
+        return fetch(`${this._baseUrl}/movies/${id}`, {
             headers: {
                 Accept: 'application/json',
                 authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 'Content-Type': 'application/json',
             },
+            method: "DELETE",
+            credentials: "include",
         }).then(this._checkResponse);
     }
 
-    /**
-     * Метод редактирования профиля пользователя
-     * API функция для изменения профиля пользователя (со страницы профиля при нажатии на кнопку сохранения)
-     * @param {Object} userData Данные о пользователе
-     * userData.name {String}
-     * userData.about {String}
-     */
-    editProfile(userData) {
-        if (!userData.name) {
-            console.error(
-                "MainApi.editProfile в аргументе userData не передано обязательное поле 'name'. Запрос не будет выполнен."
-            );
-            return;
-        }
-        if (!userData.email) {
-            console.error(
-                "MainApi.editProfile в аргументе userData не передано обязательное поле 'email'. Запрос не будет выполнен."
-            );
-            return;
-        }
-        const url = `${this._baseUrl}/users/me`;
 
-        const opts = {
-            method: "PATCH",
-            headers: {
-                Accept: 'application/json',
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userData),
-        };
-        return fetch(url, opts).then(this._checkResponse);
-    }
 }
 
 // создание экземпляра класса Api

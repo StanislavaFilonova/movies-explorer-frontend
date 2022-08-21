@@ -19,6 +19,18 @@ import auth from "../../utils/Auth";
 import api from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 
+//---------------------------------------------------------------------------------------------------------------------
+// Сообщения об ошибках
+// import {
+//     CONFLICT_EMAIL,
+//     AUTH_ERROR,
+//     PROFILE_EDIT_ERROR,
+//     SERVER_ERROR,
+//     MOVIES_NOT_FOUND,
+//     SUCCSESS_EDIT,
+//     MOVIES_SERVER_ERROR,
+//     INVALID_DATA,
+// } from "./../../utils/responses";
 
 function App(movie) {
 
@@ -137,6 +149,9 @@ function App(movie) {
                 if (err.status === 400) {
                     console.log("400 - некорректно заполнено одно из полей");
                 }
+                if (err.status === 409) {
+                    console.log("409- такой пользователь уже зарегистрирован");
+                }
                 // setIsInfoToolTipPopup({ status: false, open: true });
                 // setIsInfoToolTipPopupOpen(true);
                 // setIsSuccess(false);
@@ -175,7 +190,7 @@ function App(movie) {
                     resetForm();
                     setIsLoggedIn(true);
                     // setEmail(email);
-                    history.push("/");
+                    history.push("/movies");
                 }
             })
             .catch((err) => {
@@ -227,12 +242,12 @@ function App(movie) {
                     onCardLike={handleMovieLike}
                     />
                 </Route>
-                <ProtectedRoute exact path="/saved-movies">
-                    <SavedMovies
-                        isLoggedIn={isLoggedIn}
-                        savedCards={saveMoviesCard}
+                <ProtectedRoute
+                    exact path="/saved-movies"
+                    component={SavedMovies}
+                    isLoggedIn={isLoggedIn}
+                    savedCards={saveMoviesCard}
                     />
-                </ProtectedRoute>
                 <Route path="*">
                     <PageNotFound />
                 </Route>
