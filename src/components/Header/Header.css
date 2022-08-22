@@ -10,6 +10,9 @@
     width: 100%;
     position: relative;
 }
+.header__profile {
+    background-color: inherit;
+}
 
 .header_grey {
     background-color: #DDDEE3;
@@ -20,6 +23,10 @@
     align-items: center;
     justify-content: center;
     background-color: #FFFFFF
+}
+
+.header_menu {
+    background-color: #FAFAFA;
 }
 
 .header__logo {

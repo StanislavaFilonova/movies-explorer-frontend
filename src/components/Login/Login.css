@@ -74,6 +74,14 @@
     color: #FFFFFF;
 }
 
+.login__button_disabled {
+    background-color: black;
+    border-radius: 6px;
+    color: rgb(255, 255, 255);
+    cursor: default;
+    pointer-events: none;
+}
+
 .login__button:hover {
     opacity: 0.8;
 }

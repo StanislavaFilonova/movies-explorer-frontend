@@ -20,37 +20,6 @@ function Register(props) {
         props.onRegister({ name, password, email });
     };
 
-    // const [name, setName] = React.useState("");
-    // const [email, setEmail] = React.useState("");
-    // const [password, setPassword] = React.useState("");
-
-    // function handleNameChange(ev) {
-    //     setName(ev.target.value);
-    // }
-    //
-    // function handleEmailChange(ev) {
-    //     setEmail(ev.target.value);
-    // }
-    //
-    // function handlePasswordChange(ev) {
-    //     setPassword(ev.target.value);
-    // }
-
-    // // очистка данных формы
-    // function resetForm() {
-    //     setName("");
-    //     setEmail("");
-    //     setPassword("");
-    // }
-
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     if (!name || !email || !password) {
-    //         return;
-    //     }
-    //     props.onRegister(name, email, password, resetForm);
-    // }
-
     return(
         <div className='register'>
             <h2 className='register__title'>Добро пожаловать!</h2>

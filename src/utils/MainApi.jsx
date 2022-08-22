@@ -123,8 +123,6 @@ class MainApi {
             credentials: "include",
         }).then(this._checkResponse);
     }
-
-
 }
 
 // создание экземпляра класса Api

@@ -4,7 +4,7 @@
     margin: auto;
     padding: 0 30px;
     justify-content: center;
-    background-color: #FAFAFA;
+    background-color: #ffffff;
 }
 
 .profile__title {
@@ -117,6 +117,26 @@
     margin-top: 5px;
     min-height: 20px;
     pointer-events: none;
+}
+
+.profile__save {
+    color: #ffffff;
+    background: #FF6838;
+    border-radius: 3px;
+    height: 45px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    border: none;
+    width: 100%;
+}
+
+.profile__error {
+    color: #EE3465;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 15px;
 }
 
 @media (min-width: 768px) {

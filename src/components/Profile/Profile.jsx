@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import CurrentUserContext from "./../../contexts/CurrentUserContext";
-import './Profile.css';
 import { useFormWithValidation } from "../../utils/Validation";
-import mainApi from "../../utils/MainApi";
+import './Profile.css';
 
 function Profile(props) {
+
     const currentUser = React.useContext(CurrentUserContext);
     const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
@@ -16,17 +16,15 @@ function Profile(props) {
         }
         }, [currentUser, resetForm]);
 
-
-
     const handleChangeData = (e) => {
         e.preventDefault();
-        mainApi.editProfile({ email: values.email, name: values.name}).then((updatedUser) => {
+        const {name, email} = values;
+        props.onProfileChange(name, email);
+    }
 
-            console.log('Профиль пользователя успешно обновлен!');
-        }).catch((err) => {
-            console.warn('Не удалось обновить профиль пользователя, возникла ошибка:');
-            console.warn(err);
-        });
+    const handleSignOut = (e) => {
+        e.preventDefault();
+        props.onSignOut();
     }
 
     return (
@@ -77,7 +75,7 @@ function Profile(props) {
                         <div className='profile__links'>
 
                             <button
-                                type='button'
+                                type='submit'
                                 className={`profile__link
                                 ${!isValid && "profile__link_disabled"}
                                 ${
@@ -86,7 +84,9 @@ function Profile(props) {
                                     "profile__link_disabled"
                                 }`}
                             >Редактировать</button>
-                            <Link to='/' type='button' className='profile__link  profile__link_exit'>Выйти из аккаунта</Link>
+                            <Link to='/'>
+                                <button onClick={handleSignOut} type='button' className='profile__link  profile__link_exit'>Выйти из аккаунта</button>
+                            </Link>
                         </div>
                     </form>
 

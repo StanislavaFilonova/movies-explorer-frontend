@@ -1,38 +1,29 @@
 import '../Login/Login.css';
 import React from "react";
+import { useFormWithValidation } from "../../utils/Validation";
 
 function Login(props) {
 
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
 
-    function handleEmailChange(ev) {
-        setEmail(ev.target.value);
-    }
-
-    function handlePasswordChange(ev) {
-        setPassword(ev.target.value);
-    }
-
-    // очистка данных формы
-    function resetForm() {
-        setEmail("");
-        setPassword("");
-    }
+    // Хук для очистки формы
+    React.useEffect(() => {
+        resetForm({});
+    }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (!email || !password) {
+        if (!values.email || !values.password) {
             return;
         }
-        props.onLogin(email, password, resetForm);
+        const { email, password } = values;
+        props.onLogin(email, password);
     }
 
     return(
         <div className='login'>
             <h2 className='login__title'>Рады видеть!</h2>
             <form className='login__form' onSubmit={handleSubmit}>
-
                 <div className='login__field'>
                     <label className='login__field-hint'>
                         E-mail
@@ -43,15 +34,15 @@ function Login(props) {
                         required
                         name='email'
                         id='login-email'
-                        autoComplete='on'
+                        autoComplete='off'
                         minLength='2'
                         maxLength='15'
-                        value={email}
-                        onChange={handleEmailChange}
+                        pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+                        value={values.email || ""}
+                        onChange={handleChange}
                     />
-                    <span className='login__field-input-err' />
+                    <span className='login__field-input-err'>{errors.email}</span>
                 </div>
-
                 <div className='login__field'>
                     <label className='login__field-hint'>
                         Пароль
@@ -62,17 +53,18 @@ function Login(props) {
                         required
                         name='password'
                         id='login-password'
-                        autoComplete='on'
+                        autoComplete='off'
                         minLength='6'
                         maxLength='20'
-                        value={password}
-                        onChange={handlePasswordChange}
+                        value={values.password || ""}
+                        onChange={handleChange}
                     />
-                    <span className='login__field-input-err'/>
+                    <span className='login__field-input-err'>{errors.password}</span>
+                    <span className="login__field-input-err">{props.message}</span>
                 </div>
                 <button
                     type="submit"
-                    className="login__button"> Войти
+                    className={`login__button ${!isValid && "login__button_disabled"}`}> Войти
                 </button>
             </form>
             <p className="login__redirect">Ещё не зарегистрированы?&nbsp;

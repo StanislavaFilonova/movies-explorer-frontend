@@ -21,29 +21,34 @@ import mainApi from "../../utils/MainApi";
 
 //---------------------------------------------------------------------------------------------------------------------
 // Сообщения об ошибках
-// import {
-//     CONFLICT_EMAIL,
-//     AUTH_ERROR,
-//     PROFILE_EDIT_ERROR,
-//     SERVER_ERROR,
-//     MOVIES_NOT_FOUND,
-//     SUCCSESS_EDIT,
-//     MOVIES_SERVER_ERROR,
-//     INVALID_DATA,
-// } from "./../../utils/responses";
+import {
+    CONFLICT_EMAIL,
+    AUTH_ERROR,
+    SERVER_ERROR,
+    MOVIES_SERVER_ERROR,
+    INVALID_DATA,
+} from "./../../utils/responses";
 
 function App(movie) {
-
     // Создаем хуки, управляющие внутренним состоянием.
     const [cards, setCards] = React.useState([]);
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
     const [saveMoviesCard, setSaveMoviesCard] = React.useState([]);
     // Хук прочитает информацию о пользователе, под которым вошли на сайт и положит в переменную currentUser.Сработает при загрузке страницы
     const [currentUser, setCurrentUser] = React.useState({});
+    const [message, setMessage] = React.useState(null);
 
     const history = useHistory();
 
+    // const resetMessage = () => {
+    //     setMessage(null);
+    // };
     //---------------------------------------------------------------------------------------------------------------------
+    // Функция, которая показывает сообщения об ошибках/успешные ответы
+    function showResponseMessage(message) {
+        setMessage(message);
+        setTimeout(() => setMessage(""), 10000);
+    }
 
     // Хук для начитки инфо об авторизованном пользователе
     React.useEffect(() => {
@@ -82,11 +87,13 @@ function App(movie) {
                         item.cardLikeCssClass = 'movie-card__like';
                     }
                 });
-
                 setSaveMoviesCard(savedCards); // локально храним все сохраненные ранее карточки
                 setCards(cards); // рисуем все пришедшие карточки с сайта фильмов
             })
                 .catch((err) => {
+                    if (err === "500") {
+                        setMessage(MOVIES_SERVER_ERROR);
+                    }
                     console.log(err);
                 })
                 .finally(() => console.log("200"));
@@ -94,18 +101,19 @@ function App(movie) {
     }, [isLoggedIn]);
 
 //---------------------------------------------------------------------------------------------------------------------
+    // Получение сохраненных карточек
     React.useEffect(() => {
         mainApi.getSavedMovies().then((movies) => {
             setSaveMoviesCard(movies);
         }).catch((err) => {
-            console.log("Не удалось получить список фильмов."
-            );
+            if (err === "500") {
+                setMessage(MOVIES_SERVER_ERROR);
+            }
             console.log(err);
         })
         }, []);
 
     //---------------------------------------------------------------------------------------------------------------------
-
     // Хук для проверки токена при каждом монтировании компонента App
     React.useEffect(
         () => {
@@ -115,7 +123,7 @@ function App(movie) {
     );
 
 //---------------------------------------------------------------------------------------------------------------------
-
+    // Получение токена
     function handleIsToken() {
         const jwt = localStorage.getItem("jwt");
         if (!jwt) {
@@ -147,16 +155,19 @@ function App(movie) {
             })
             .catch((err) => {
                 if (err.status === 400) {
-                    console.log("400 - некорректно заполнено одно из полей");
+                    return showResponseMessage(INVALID_DATA);
                 }
                 if (err.status === 409) {
-                    console.log("409- такой пользователь уже зарегистрирован");
+                    return showResponseMessage(CONFLICT_EMAIL);
+                } else if (err.status === 500) {
+                    return showResponseMessage(SERVER_ERROR);
                 }
                 // setIsInfoToolTipPopup({ status: false, open: true });
                 // setIsInfoToolTipPopupOpen(true);
                 // setIsSuccess(false);
             });
     }
+
     // проверка состояния лайка
     function checkLikeSaveMovie(movie) {
         return saveMoviesCard.some((i) => i === movie.id);
@@ -181,31 +192,46 @@ function App(movie) {
         }
         movie.cardLikeCssClass ='movie-card__like_active';
     }
-
-    function handleIsLogin(userEmail, userPassword, resetForm) {
+    // Функция логирования пользователя
+    function handleIsLogin(userEmail, userPassword) {
         auth.login(userEmail, userPassword)
             .then((res) => {
                 if (res.token) {
                     localStorage.setItem("jwt", res.token);
-                    resetForm();
                     setIsLoggedIn(true);
-                    // setEmail(email);
                     history.push("/movies");
                 }
             })
             .catch((err) => {
                 if (err.status === 400) {
-                    console.log("400 - не передано одно из полей");
+                    return showResponseMessage(INVALID_DATA);
                     // setIsSuccess(false);
-                    // setIsInfoToolTipPopupOpen(true);
                 } else if (err.status === 401) {
-                    console.log("401 - пользователь с email не найден");
+                    return showResponseMessage(AUTH_ERROR);
                     // setIsInfoToolTipPopupOpen(true);
+                } else if (err.status === 500) {
+                    return showResponseMessage(SERVER_ERROR);
                 }
-                // setIsInfoToolTipPopup({ status: false, open: true });
             });
     }
+    // Функция редактирования пользователя
+    function handleProfileChange(name, email) {
+        mainApi.editProfile({ name: name, email: email ? email : currentUser.email}).then((updatedUser) => {
+            console.log('Профиль пользователя успешно обновлен!');
+            setCurrentUser(updatedUser);
+        }).catch((err) => {
+            console.warn('Не удалось обновить профиль пользователя, возникла ошибка:');
+            console.warn(err);
+        });
+    }
 
+    const handleSignOut = () => {
+        setIsLoggedIn(false);
+        localStorage.clear()
+        history.push('/');
+    };
+
+    // -----------------------------------------------------------------------------------------------------------------
     return (
         <div className="page">
             <CurrentUserContext.Provider value={currentUser}>
@@ -220,39 +246,45 @@ function App(movie) {
                     <Register
                         onRegister={handleIsRegister}
                         history={history}
+                        message={message}
                     />
                 </Route>
                 <Route exact path="/sign-in">
                     <Login
                         onLogin={handleIsLogin}
                         history={history}
+                        message={message}
                     />
                 </Route>
-                <Route exact path="/profile">
-                    <Profile
-                        isLoggedIn={isLoggedIn}
-                        currentUser={currentUser}
+                <ProtectedRoute
+                    exact path="/profile"
+                    component={Profile}
+                    isLoggedIn={isLoggedIn}
+                    currentUser={currentUser}
+                    message={message}
+                    onProfileChange={handleProfileChange}
+                    onSignOut={handleSignOut}
                     />
-                </Route>
-                <Route exact path="/movies">
-                    <Movies
+                <ProtectedRoute
+                    exact path="/movies"
+                    component={Movies}
                     isLoggedIn={isLoggedIn}
                     cards={cards}
                     savedCards={saveMoviesCard}
                     onCardLike={handleMovieLike}
+                    message={message}
                     />
-                </Route>
                 <ProtectedRoute
                     exact path="/saved-movies"
                     component={SavedMovies}
                     isLoggedIn={isLoggedIn}
                     savedCards={saveMoviesCard}
+                    message={message}
                     />
                 <Route path="*">
                     <PageNotFound />
                 </Route>
             </Switch>
-
             <Footer />
             </CurrentUserContext.Provider>
         </div>

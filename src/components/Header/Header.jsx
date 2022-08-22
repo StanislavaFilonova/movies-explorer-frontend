@@ -13,7 +13,7 @@ function Header() {
     let location = useLocation();
 
     return(
-        <header className={` header ${location.pathname === "/" ? "header_grey" : ""} ${(location.pathname === "/sign-in" || location.pathname === "/sign-up") ? "header_welcome" : ""} ${(location.pathname === "/movies" || location.pathname === "/saved-films") ? "header_menu" : ""}`}>
+        <header className={` header ${location.pathname === "/" ? "header_grey" : ""} ${(location.pathname === "/sign-in" || location.pathname === "/sign-up") ? "header_welcome" : ""} ${(location.pathname === "/movies" || location.pathname === "/saved-films") ? "header_menu" : ""} ${location.pathname === "/profile" ? "header__profile" : ""}`}>
                 <Link to='/' className='header__logo-click'>
                     <img
                         className="header__logo"
