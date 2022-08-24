@@ -1,4 +1,4 @@
-const MOVIES_IMAGE_BASE_URL = 'https://api.nomoreparties.co';
+// const MOVIES_IMAGE_BASE_URL = 'https://api.nomoreparties.co';
 
 class MainApi {
     constructor({baseUrl, headers}) {

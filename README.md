@@ -1,6 +1,6 @@
 # Фронтенд допломной работы
 
-###Описание проекта:
+### Описание проекта:
 
 Фронтенд Диплома «Movies Explorer» — это интерактивная SPA-страница, на которой пользователи могут искать фильмы по ключевым словам и добавлять их в избранное в личном кабинете. Stack: JavaScript, API, React.js, JSX, HTML5, CSS3, БЭМ, Flexbox, Grid Layout, Figma.
 
@@ -41,3 +41,13 @@
 
 
 ### Макет можно посмотреть: [Figma](https://www.figma.com/file/cm3mOwf1Z6MpeI8rLZkVrI/Diploma.-Filonova?node-id=891%3A3857)
+
+## Ссылка на домен проекта
+Публичный IP адрес: 51.250.6.23
+
+Ссылка на домен сервера: https://diploma-movies-filonova.nomoredomains.xyz
+
+Ссылка на фронт часть: https://front-diploma-movies.nomoredomains.xyz
+
+## Ссылка на пул-реквест: 
+https://github.com/StanislavaFilonova/movies-explorer-frontend/pull/2
