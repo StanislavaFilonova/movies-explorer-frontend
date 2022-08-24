@@ -144,6 +144,10 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
     return (
         <section className="movies">
             <SearchForm onSearchMovies={handleSearch}/>
+            {isLoading ? (
+                    <Preloader />
+                ) : (
+                    <>
             {moviesToRender.length > 0 ? (
                 <MoviesCardList
                     onCardLike={onCardLike}
@@ -156,9 +160,7 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
             ) : (
                 <span className='movies__status'>{searchStatus || MOVIES_NOT_FOUND}</span>
             )}
-            {isLoading ? (
-                <Preloader />
-            ) : (
+                : (
                 <button
                     className= {
                         isElseButtonVisible
@@ -170,6 +172,7 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
                 >
                     Ещё
                 </button>
+            </>
             )}
         </section>
     )
