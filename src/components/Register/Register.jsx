@@ -23,11 +23,10 @@ function Register(props) {
     return(
         <div className='register'>
             <h2 className='register__title'>Добро пожаловать!</h2>
-
             <form className='register__form' name="form-register" onSubmit={handleSubmit}>
                 <div className='register__field'>
                     <label className='register__field-hint'>
-                    Имя
+                        Имя
                     </label>
                     <input
                         id='name'
@@ -45,7 +44,6 @@ function Register(props) {
                     />
                     <span className='register__field-input-err'> {errors.name} </span>
                 </div>
-
                 <div className='register__field'>
                     <label className='register__field-hint'>
                         E-mail
@@ -64,7 +62,6 @@ function Register(props) {
                     />
                     <span className='register__field-input-err'> {errors.email} </span>
                 </div>
-
                 <div className='register__field'>
                     <label className='register__field-hint'>
                         Пароль

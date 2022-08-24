@@ -15,7 +15,7 @@ function Portfolio() {
                         target="_blank"
                         rel = "noreferrer noopener"
                     >
-                        <img className="portfolio__arrow" alt="иконка перехода на проект" src={arrow}></img>
+                        <img className="portfolio__arrow" alt="иконка перехода на проект" src={arrow}/>
                     </a>
                 </li>
                 <li className="portfolio__item">
@@ -26,7 +26,7 @@ function Portfolio() {
                         target="_blank"
                         rel = "noreferrer noopener"
                     >
-                        <img className="portfolio__arrow" alt="иконка перехода на проект" src={arrow}></img>
+                        <img className="portfolio__arrow" alt="иконка перехода на проект" src={arrow}/>
                     </a>
                 </li>
                 <li className="portfolio__item">
@@ -37,7 +37,7 @@ function Portfolio() {
                         target="_blank"
                         rel = "noreferrer noopener"
                     >
-                        <img className="portfolio__arrow" alt="иконка перехода на проект" src={arrow}></img>
+                        <img className="portfolio__arrow" alt="иконка перехода на проект" src={arrow}/>
                     </a>
                 </li>
             </ul>

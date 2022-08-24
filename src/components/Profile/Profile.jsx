@@ -16,12 +16,13 @@ function Profile(props) {
         }
         }, [currentUser, resetForm]);
 
+    // Функция на смену данных в профиле
     const handleChangeData = (e) => {
         e.preventDefault();
         const {name, email} = values;
         props.onProfileChange(name, email);
     }
-
+    // выход со страницы
     const handleSignOut = (e) => {
         e.preventDefault();
         props.onSignOut();
@@ -34,21 +35,21 @@ function Profile(props) {
                         className='profile__form' onSubmit={handleChangeData}
                     >
                         <div className='profile__input-box'>
-                                <p className='profile__input-name'>Имя</p>
-                                <input
-                                    className='profile__field-name'
-                                    type='text'
-                                    required
-                                    name='name'
-                                    autoComplete='off'
-                                    minLength='2'
-                                    maxLength='15'
-                                    id='name'
-                                    value={values.name || currentUser.name}
-                                    placeholder="Имя"
-                                    onChange={handleChange}
-                                    pattern="^[А-Яа-яЁёA-Za-z]+-? ?[А-Яа-яЁёA-Za-z]+$"
-                                />
+                            <p className='profile__input-name'>Имя</p>
+                            <input
+                                className='profile__field-name'
+                                type='text'
+                                required
+                                name='name'
+                                autoComplete='off'
+                                minLength='2'
+                                maxLength='15'
+                                id='name'
+                                value={values.name || currentUser.name}
+                                placeholder="Имя"
+                                onChange={handleChange}
+                                pattern="^[А-Яа-яЁёA-Za-z]+-? ?[А-Яа-яЁёA-Za-z]+$"
+                            />
                         </div>
                         <span className="profile__input-error" id="name-error">
                             {errors.name}
@@ -89,7 +90,6 @@ function Profile(props) {
                             </Link>
                         </div>
                     </form>
-
             </div>
     )
 }

@@ -2,7 +2,6 @@ import './Footer.css';
 import { useLocation } from 'react-router-dom';
 
 function Footer() {
-
     const location = useLocation();
     const islocationProfile = location.pathname === "/profile";
     const islocationSignIn = location.pathname === "/sign-in";

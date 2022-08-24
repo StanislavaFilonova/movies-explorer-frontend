@@ -37,8 +37,6 @@ class MainApi {
      * Метод редактирования профиля пользователя
      * API функция для изменения профиля пользователя (со страницы профиля при нажатии на кнопку сохранения)
      * @param {Object} userData Данные о пользователе
-     * userData.name {String}
-     * userData.about {String}
      */
     editProfile(userData) {
         if (!userData.name) {
@@ -69,29 +67,16 @@ class MainApi {
 
     /**
      * Метод постановки лайка на фильм => перенос фильма в коллекцию сохраненных
-     * @param {String} data фильм
+     * @param {String} movie фильм
      */
-    putMovieLike(data){
+    putMovieLike(movie){
         return fetch(`${this._baseUrl}/movies`, {
             method: "POST",
             headers: {
                 'Content-Type': "application/json",
-                credentials: 'include',
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`,
             },
-            body: JSON.stringify({
-                country: data.country || " ",
-                director: data.director || ' ',
-                duration: data.duration || ' ',
-                year: data.year || ' ',
-                description: data.description || ' ',
-                image: `${MOVIES_IMAGE_BASE_URL}${data.image.url}` || ' ',
-                trailerLink: data.trailerLink || ' ',
-                thumbnail: `${MOVIES_IMAGE_BASE_URL}${data.image.formats.thumbnail.url}` || ' ',
-                movieId: data.id || ' ',
-                nameRU: data.nameRU || ' ',
-                nameEN: data.nameEN || ' ',
-            }),
+            body: JSON.stringify(movie),
         }).then(this._checkResponse);
     }
 
@@ -99,7 +84,7 @@ class MainApi {
      * Метод получения информации о сохраненных фильмах пользователя с сервера
      * Api метод чтения инфо о пользователе (для заполнения currentUser в App.jsx
      */
-    getSavedMovies() {
+    getMovies() {
         return fetch(`${this._baseUrl}/movies`, {
             headers: {
                 Accept: 'application/json',
@@ -110,17 +95,16 @@ class MainApi {
     }
 
     /**
-     * Метод уадления фильма из сохраненных фильмов пользователя с сервера
+     * Метод удаления фильма
      */
-    deleteMovie(id) {
-        return fetch(`${this._baseUrl}/movies/${id}`, {
+    deleteMovies(movie) {
+        return fetch(`${this._baseUrl}/movies/${movie._id}`, {
+            method: "DELETE",
             headers: {
                 Accept: 'application/json',
                 authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 'Content-Type': 'application/json',
             },
-            method: "DELETE",
-            credentials: "include",
         }).then(this._checkResponse);
     }
 }

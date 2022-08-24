@@ -63,14 +63,14 @@ class Auth {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                //"Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
             },
         }).then(this._checkResponse);
     }
 }
 
 const auth = new Auth({
-    // baseUrl: "https://auth.nomoreparties.co",
     baseUrl: "https://diploma-movies-filonova.nomoredomains.xyz",
 });
 
