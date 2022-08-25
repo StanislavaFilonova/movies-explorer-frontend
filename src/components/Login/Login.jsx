@@ -8,7 +8,7 @@ function Login(props) {
 
     // Хук для очистки формы
     React.useEffect(() => {
-        resetForm({});
+        resetForm({}); // eslint-disable-next-line
     }, []);
 
     function handleSubmit(e) {
@@ -17,7 +17,7 @@ function Login(props) {
             return;
         }
         const { email, password } = values;
-        props.onLogin(email, password);
+        props.onLogin({ email, password });
     }
 
     return(
@@ -40,6 +40,7 @@ function Login(props) {
                         pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
                         value={values.email || ""}
                         onChange={handleChange}
+                        disabled={props.isLoginSending}
                     />
                     <span className='login__field-input-err'>{errors.email}</span>
                 </div>
@@ -58,13 +59,14 @@ function Login(props) {
                         maxLength='20'
                         value={values.password || ""}
                         onChange={handleChange}
+                        disabled={props.isLoginSending}
                     />
                     <span className='login__field-input-err'>{errors.password}</span>
                     <span className="login__field-input-err">{props.message}</span>
                 </div>
                 <button
                     type="submit"
-                    className={`login__button ${!isValid && "login__button_disabled"}`}> Войти
+                    className={`login__button ${!isValid && "login__button_disabled"} ${props.isLoginSending && "login__button_disabled"}`}> Войти
                 </button>
             </form>
             <p className="login__redirect">Ещё не зарегистрированы?&nbsp;

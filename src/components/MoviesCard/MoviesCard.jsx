@@ -4,11 +4,11 @@ import { Switch, Route } from 'react-router-dom';
 const MOVIES_SERVER_URL  = "https://api.nomoreparties.co";
 
 function MoviesCard ({ card, onCardLike, onCardDelete, movies }) {
-    const isLiked = movies.some((e) => e.movieId == card.id)
+    const isLiked = movies.some((e) => e.movieId === card.id)
     // Функция отрисовки лайка
     const handleMoviesLiked = () => {
         if (isLiked) {
-            const currentMovie = movies.find(item => item.movieId == card.id)
+            const currentMovie = movies.find(item => item.movieId === card.id)
             onCardDelete(currentMovie)
         } else if (!isLiked) {
             onCardLike({

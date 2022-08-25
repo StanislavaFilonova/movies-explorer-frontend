@@ -39,7 +39,7 @@ class Auth {
      * @param {String} email Почтовый адрес пользователя, необходимый для авторизации
      * @param {String} password Пароль пользователя, необходимый для авторизации
      */
-    login(email, password) {
+    login( { email, password  } ) {
         return fetch(`${this._baseUrl}/sign-in`, {
             method: "POST",
             headers: {

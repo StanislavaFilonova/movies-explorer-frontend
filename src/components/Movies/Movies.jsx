@@ -23,7 +23,7 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
     const [initialMovies, setInitialMovies] = React.useState([]); // первоначальный список фильмов
     const [moviesToRender, setMoviesToRender] = React.useState([]); // Список фильмов для возврата после поиска
     const [filteredMovies, setFilteredMovies] = React.useState([]); // отфильтрованные фильмы
-
+    // eslint-disable-next-line
     const [isSearchMovies, setSearchMovies] = React.useState(false); // поиск фильмов
     const [searchStatus, setSearchStatus] = React.useState(''); // статус после поиска фильма
 
@@ -32,7 +32,9 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
     const [isElseButtonVisible, setIsElseButtonVisible] = React.useState(false); // показывается или нет кнопка ЕЩЁ
     const [isLoading, setLoading] = React.useState(false); //Статус загрузки
 
-    const currentViewport = document.documentElement.clientWidth; // Прислушиваемся к размеру экрана пользователя
+    const currentViewport = document.documentElement.clientWidth;
+    // eslint-disable-next-line
+    const [size, setSize] = React.useState(window.innerWidth); // Хук, который отвечает за поворот экрана
 
     // Хук для поиска фильмов
     React.useEffect(() => {
@@ -40,8 +42,9 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
             const init = JSON.parse(localStorage.getItem('searchResults'));
             const searchResult = filmsFilter(init, request, checkboxStatus);
             setFilteredMovies(searchResult);
-        }
+        } // eslint-disable-next-line
     }, []);
+
     //Функция поиска и получения фильмов с сервера moviesApi
     const handleSearch = (request, checkboxStatus) => {
         setMoviesToRender([]);
@@ -82,6 +85,7 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
             localStorage.setItem('searchResults', JSON.stringify(searchResults));
         }
     }, [initialMovies, request, checkboxStatus]);
+
     // Размещение фильмов
     React.useEffect(() => {
         if (filteredMovies.length > 0) {
@@ -109,10 +113,10 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
         }
     }, [moviesToRender, filteredMovies]);
 
-    function handleMoviesCount() {
+    React.useEffect(() => {
         if (currentViewport <= 480) {
             setFirstResultsNumber(5);
-            setMoreResultsNumber(1);
+            setMoreResultsNumber(2);
         } else if (currentViewport <= 768) {
             setFirstResultsNumber(8);
             setMoreResultsNumber(2);
@@ -121,22 +125,20 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
             setMoreResultsNumber(3);
         } else if (currentViewport >= 1280) {
             setFirstResultsNumber(12);
-            setMoreResultsNumber(4);
+            setMoreResultsNumber(3);
         }
-    }
+    }, [currentViewport]);
+
+    // Поворот экрана
+    const handleResize = () => {
+        setSize(window.innerWidth);
+    };
 
     React.useEffect(() => {
-        handleMoviesCount();
-    }, []);
-
-    React.useEffect(() => {
-        const handleResizeWindow = () => {
-            setTimeout(handleMoviesCount, 3000);
-        }
-        window.addEventListener("resize", handleResizeWindow);
-        return () => {
-            window.removeEventListener("resize", handleResizeWindow);
-        }
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+        // eslint-disable-next-line
     }, []);
 
     //------------------------------------------------------------------------------------------------------------------
@@ -145,34 +147,33 @@ function Movies({ cards, onCardClick, onCardLike, onCardDelete }) {
         <section className="movies">
             <SearchForm onSearchMovies={handleSearch}/>
             {isLoading ? (
-                    <Preloader />
-                ) : (
-                    <>
-            {moviesToRender.length > 0 ? (
-                <MoviesCardList
-                    onCardLike={onCardLike}
-                    movies={cards}
-                    cards={moviesToRender}
-                    onMoreBtn={handleMoreButtonClick}
-                    onCardClick={onCardClick}
-                    onCardDelete={onCardDelete}
-                />
+                <Preloader />
             ) : (
-                <span className='movies__status'>{searchStatus || MOVIES_NOT_FOUND}</span>
-            )}
-                : (
-                <button
-                    className= {
-                        isElseButtonVisible
-                            ? 'movies__more-button'
-                            : 'movies__more-button_hidden'
+                <>
+                    {moviesToRender.length > 0 ? (
+                        <MoviesCardList
+                            onCardLike={onCardLike}
+                            movies={cards}
+                            cards={moviesToRender}
+                            onMoreBtn={handleMoreButtonClick}
+                            onCardClick={onCardClick}
+                            onCardDelete={onCardDelete}
+                        />
+                    ) : (
+                        <span className='movies__status'>{searchStatus || MOVIES_NOT_FOUND}</span>
+                    )}
+                    <button
+                        className= {
+                            isElseButtonVisible
+                                ? 'movies__more-button'
+                                : 'movies__more-button_hidden'
                         }
-                    type='button'
-                    onClick={handleMoreButtonClick}
-                >
-                    Ещё
-                </button>
-            </>
+                        type='button'
+                        onClick={handleMoreButtonClick}
+                    >
+                        Ещё
+                    </button>
+                </>
             )}
         </section>
     )

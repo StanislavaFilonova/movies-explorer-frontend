@@ -43,7 +43,7 @@
 ### Макет можно посмотреть: [Figma](https://www.figma.com/file/cm3mOwf1Z6MpeI8rLZkVrI/Diploma.-Filonova?node-id=891%3A3857)
 
 ## Ссылка на домен проекта
-Публичный IP адрес: 51.250.6.23
+Публичный IP адрес: 84.201.172.134
 
 Ссылка на домен сервера: https://diploma-movies-filonova.nomoredomains.xyz
 

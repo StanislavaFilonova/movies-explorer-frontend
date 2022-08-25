@@ -37,8 +37,8 @@ function App() {
     const [currentUser, setCurrentUser] = React.useState({});
 
     const [saveMoviesCard, setSaveMoviesCard] = React.useState([]);
-    const [isRegisterSending, setRegisterSending] = React.useState(true);
-    const [isLoginSending, setLoginSending] = React.useState(true);
+    const [isRegisterSending, setRegisterSending] = React.useState(false);
+    const [isLoginSending, setLoginSending] = React.useState(false);
     const [isProfileSending, setProfileSending] = React.useState(false);
 
     const [message, setMessage] = React.useState(null);
@@ -82,7 +82,7 @@ function App() {
     React.useEffect(
         () => {
             handleIsToken();
-        },
+        }, // eslint-disable-next-line
         []
     );
 
@@ -116,11 +116,10 @@ function App() {
 
     // Проверяем зарегистрирован ли пользователь
     function handleIsRegister(data) {
-        setRegisterSending(false);
+        setRegisterSending(true);
         auth.register(data)
-            .then((res) => {
-                console.log("200 - всё корректно заполнено");
-                history.push("/movies");
+            .then(() => {
+                handleIsLogin(data);
             })
             .catch((err) => {
                 if (err.status === 400) {
@@ -132,14 +131,14 @@ function App() {
                     return showResponseMessage(SERVER_ERROR);
                 }
             }).finally(() => {
-                setRegisterSending(true);
+                setRegisterSending(false);
         });
     }
 
     // Функция логирования пользователя
-    function handleIsLogin(userEmail, userPassword) {
-        setLoginSending(false);
-        auth.login(userEmail, userPassword)
+    function handleIsLogin(data) {
+        setLoginSending(true);
+        auth.login(data)
             .then((res) => {
                 if (res.token) {
                     localStorage.setItem("jwt", res.token);
@@ -158,7 +157,7 @@ function App() {
                 }
             })
             .finally(() => {
-                setLoginSending(true);
+                setLoginSending(false);
             });
     }
 
@@ -232,6 +231,7 @@ function App() {
                             onRegister={handleIsRegister}
                             history={history}
                             message={message}
+                            isRegisterSending={isRegisterSending}
                         />
                     </Route>
                     <Route exact path="/sign-in">
@@ -239,6 +239,7 @@ function App() {
                             onLogin={handleIsLogin}
                             history={history}
                             message={message}
+                            isLoginSending={isLoginSending}
                         />
                     </Route>
                     <ProtectedRoute
@@ -249,7 +250,7 @@ function App() {
                         message={message}
                         onProfileChange={handleProfileChange}
                         onSignOut={handleSignOut}
-                        isSending={isProfileSending}
+                        isProfileSending={isProfileSending}
                     />
                     <ProtectedRoute
                         exact path="/movies"

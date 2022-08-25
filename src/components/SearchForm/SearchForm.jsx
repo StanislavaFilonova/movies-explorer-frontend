@@ -35,7 +35,7 @@ function SearchForm({ onSearchMovies }) {
             } else {
                 setCheckboxStatusSaved(false);
             }
-        }
+        } // eslint-disable-next-line
     }, [location.pathname]);
 
     // Функция , помогающая избежать перезагрузки страницы

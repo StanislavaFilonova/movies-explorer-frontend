@@ -7,7 +7,7 @@ function Register(props) {
 
     // Хук для очистки формы
     React.useEffect(() => {
-        resetForm({});
+        resetForm({}); // eslint-disable-next-line
     }, []);
 
     // Функция, которая проверяет введены ли эмейл и пароль, закидывает введенные занчения в свои ячейки
@@ -41,6 +41,7 @@ function Register(props) {
                         maxLength='30'
                         value={values.name || ""}
                         onChange={handleChange}
+                        disabled={props.isRegisterSending}
                     />
                     <span className='register__field-input-err'> {errors.name} </span>
                 </div>
@@ -59,6 +60,7 @@ function Register(props) {
                         pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
                         value={values.email || ""}
                         onChange={handleChange}
+                        disabled={props.isRegisterSending}
                     />
                     <span className='register__field-input-err'> {errors.email} </span>
                 </div>
@@ -77,6 +79,7 @@ function Register(props) {
                         maxLength='20'
                         value={values.password || ""}
                         onChange={handleChange}
+                        disabled={props.isRegisterSending}
                     />
                     <span className='register__field-input-err'>
                         {errors.password}
@@ -87,7 +90,7 @@ function Register(props) {
                 <button
                     type="submit"
                     className={`register__button
-                        ${!isValid && "register__button_disabled "}`}
+                        ${!isValid && "register__button_disabled "} ${props.isRegisterSending && "register__button_disabled "}`}
                     > Зарегистрироваться
                 </button>
             </form>
