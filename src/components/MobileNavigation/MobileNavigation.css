@@ -61,6 +61,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .mobile-navigation__menu {
@@ -127,6 +128,7 @@
     width: 12px;
     background: transparent url(./../../images/person.svg);
 }
+
 .cover {
     background: rgba(0, 0, 0, 0.3);
     position: absolute;
@@ -137,7 +139,6 @@
     z-index: 2;
     height: 100vh;
 }
-
 
 @media (min-width: 768px) {
     .mobile-navigation {

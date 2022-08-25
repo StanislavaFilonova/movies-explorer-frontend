@@ -6,16 +6,23 @@
 
 .movie-card__img{
     width: 300px;;
+    height: 168px;
+    object-fit: cover;
 }
 
 .movie-card__container{
     display: flex;
     position: relative;
+    flex-direction: column;
+    width: 290px;
 }
 
 .movie-card__info{
     margin: 12px 0 0;
     width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 .movie-card__name{
@@ -24,6 +31,9 @@
     font-size: 12px;
     line-height: 15px;
     margin: 0 0 0 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .movie-card__time{
@@ -33,14 +43,45 @@
     line-height: 12px;
     color: #A0A0A0;
     margin: 14px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 .movie-card__like{
+    border: none;
+    background-image: url(../../images/whitelike.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 36px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: inherit;
+    margin-right: 12px;
+    display: inline-block;
+}
+
+.movie-card__like_active{
+    background-image: url(../../images/red.svg);
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 36px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    background-color: inherit;
+    margin-right: 12px;
+    display: inline-block;
+}
+
+.movie-card__delete {
+    background-image: url(../../images/delete.svg);
     position: absolute;
     top: 10px;
     right: 0;
     border: none;
-    background-image: url(../../images/whitelike.svg);
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 36px;
@@ -51,29 +92,33 @@
     margin-right: 12px;
 }
 
-.movie-card__like_active{
-    background-image: url(../../images/red.svg);
-}
-
-.movie-card__delete {
-    background-image: url(../../images/delete.svg);
+.movie-card__trailer {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
 }
 
 @media (min-width: 768px) {
     .movie-card__img{
         width: 339px;
+        height: 190px;
     }
 
     .movie-card__like {
         top: 7px;
         margin-right: 16px;
     }
+    .movie-card__container{
+        width: 339px;
+    }
 }
 
 @media (min-width: 1280px) {
     .movie-card__img{
+        height: 203px;
         width: 100%;
     }
+
     .movie-card__info {
         margin: 16px 0 0;
     }
@@ -87,5 +132,9 @@
         font-size: 11px;
         line-height: 13px;
         margin: 15px;
+    }
+
+    .movie-card__container{
+        width: 364px;
     }
 }
